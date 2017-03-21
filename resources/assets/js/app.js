@@ -12,9 +12,46 @@ require('./bootstrap');
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
 Vue.component('example', require('./components/Example.vue'));
 
-const app = new Vue({
-    el: '#app'
+ new Vue({
+    el: '#app',
+
+    data: {
+	    data: [
+	    	{
+	    		first_name: '',
+	    		last_name: '',
+	    		age:'',
+	    		email: '',
+	    		secret: ''
+	    	}
+	    ],
+	    newItem: {first_name: '', last_name: '', age:'', email: '', secret: ''}
+  	},
+
+  	methods: {
+  		addPerson(e) {
+  			e.preventDefault();
+  			this.data.push(Vue.util.extend({}, this.newItem));
+  		},
+  		removePerson(e) {
+  			e.preventDefault();
+  			if(this.data.length > 1) {
+  				this.data.pop();
+  			}
+  		},
+  		onSubmit() {
+  			axios.post('/people/store', this.data)
+  			.then(function (response) {
+    			console.log("submission was a success!")
+  			})
+  			.catch(function (error) {
+    			console.log(error);
+  			});
+  		} 
+  	}
 });
+
+
+

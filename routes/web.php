@@ -11,6 +11,5 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', ['uses' => 'PeopleController@index']);
+Route::post('people/store', [ 'as' => 'people.store', 'uses' => 'PeopleController@store']);
